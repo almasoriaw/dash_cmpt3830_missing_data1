@@ -43,4 +43,5 @@ dash
 gunicorn
 flask
 plotly
+flask_basicauth
 
