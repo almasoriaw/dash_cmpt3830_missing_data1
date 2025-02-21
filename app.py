@@ -14,8 +14,8 @@ missing_df_after = pd.read_csv('missing_values_summary_after.csv')
 app = dash.Dash(__name__)
 server = app.server
 # Set up basic authentication
-app.server.config['BASIC_AUTH_USERNAME'] = 'my_add'
-app.server.config['BASIC_AUTH_PASSWORD'] = '12asasdas'
+app.server.config['BASIC_AUTH_USERNAME'] = 'group1'
+app.server.config['BASIC_AUTH_PASSWORD'] = 'norquestca'
 
 basic_auth = BasicAuth(app.server)
 
