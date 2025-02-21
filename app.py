@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/10DhPrPghKxS6w6uC6bCCktQ219P5kSFH
 """
 
-!pip install dash
-
 import pandas as pd
 
 # Load missing_df (Before Cleaning)
@@ -21,9 +19,22 @@ import dash
 from dash import dcc, html, Input, Output
 import plotly.express as px
 import pandas as pd
+from flask_basicauth import BasicAuth
 
 # Initialize Dash App
 app = dash.Dash(__name__)
+
+# Set up basic authentication
+app.server.config['BASIC_AUTH_USERNAME'] = 'group1'
+app.server.config['BASIC_AUTH_PASSWORD'] = 'norquestca'
+
+basic_auth = BasicAuth(app.server)
+
+# Protect the app with basic authentication
+@app.server.before_request
+def before_request():
+    if not basic_auth.authenticate():
+        return basic_auth.challenge()  # Challenge for authentication
 
 app.layout = html.Div([
     html.H1(
