@@ -1,16 +1,14 @@
 import pandas as pd
+import dash
+from dash import dcc, html, Input, Output
+import plotly.express as px
+from flask_basicauth import BasicAuth
 
 # Load missing_df (Before Cleaning)
 missing_df = pd.read_csv('missing_values_summary.csv')
 
 # Load missing_df_after (After Cleaning)
 missing_df_after = pd.read_csv('missing_values_summary_after.csv')
-
-import dash
-from dash import dcc, html, Input, Output
-import plotly.express as px
-import pandas as pd
-from flask_basicauth import BasicAuth
 
 # Initialize Dash App
 app = dash.Dash(__name__)
