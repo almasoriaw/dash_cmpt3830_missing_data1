@@ -42,7 +42,7 @@ app.layout = html.Div([
         id='data-selector',
         options=[
             {'label': 'Missing Values Before Cleaning', 'value': 'before'},            
-            {'label': 'First Columns Created', 'value': 'columns_created'},
+            {'label': 'New Columns Created', 'value': 'columns_created'},
             {'label': 'Columns Dropped', 'value': 'columns_dropped'},
             {'label': 'Missing Values After Cleaning', 'value': 'after'}
         ],
@@ -116,11 +116,11 @@ def update_content(selected_data):
 
     elif selected_data == 'columns_created':
         text = dcc.Markdown("""
-Splitting **Meter Description** in 2 columns --> **Meter Location** and **Product Description**. Dropped original column.
+Splitting the column **Meter Description** to create 2 new columns --> **Meter Location** and **Product Description**. Dropped original column.
 
-Splitting **Tank Description** in 2 columns --> **Tank Location** and **Tank Product**. Dropped original column.
+Splitting the column **Tank Description** to create 2 new columns --> **Tank Location** and **Tank Product**. Dropped original column.
 
-From the **PDF Minesite flows info**. We mapped each row with their respective product description match to create the columns **LOW FLOW**, **MED FLOW** and **HI FLOW**.
+From the **PDF Minesite flows info**. We mapped each row with their respective product description match to create the columns **LOW FLOW**, **MED FLOW** and **HI FLOW** --> Units (LPM).
 """)
         
     
@@ -131,14 +131,20 @@ From the **PDF Minesite flows info**. We mapped each row with their respective p
     
     elif selected_data == 'columns_dropped':
         text = dcc.Markdown("""
-**Dropped Columns:**  
+**Dropped Unnecessary Columns:**  
                             
 **SCU ID**, **Meter ID**, **Tank ID**, **Equipment ID**, **Equipment Field ID**, **Department**, **Category** (1 unique value), **"Metered Volume"** (high correlation with Volume)
 
 Dropping ID columns in EDA removes non-predictive, unique identifiers that lack statistical relevance, reduce visualization clarity, and risk model overfitting.
 
 If left in, they can confuse models into “memorizing” these codes instead of learning real patterns, leading to poor predictions on new data. This allows the analysis to focus on meaningful data patterns and relationships.
-""")
+                            
+**Dropped Columns with +60% missing values:**
+
+The list of dropped columns due to high percentage of missing values is as follows: 
+Meter ERP Reference, Product ERP Reference, Cost Centre, Field Entered Volume, Service Metering Unit, SMU Value Source, SMU Source, Raw SMU Value, Calculated SMU Value, Document Reference, Division, NGER Group, NPI Group, Project Code, Fuel Tax Rebate Eligible?, Is Contractor?, Is Light Vehicle?, Is Pod?, Expiry Date, Web User, Field User, Resource ID, Notes, Operator, CO2 emissions (Tonnes), Location, Unnamed: 52
+"""
+)
 
         return html.Div([
             html.H2("Columns Dropped", style={'fontFamily': 'Tahoma', 'fontSize': '20px'}),
